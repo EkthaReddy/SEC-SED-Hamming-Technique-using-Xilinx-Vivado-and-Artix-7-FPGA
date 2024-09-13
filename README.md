@@ -1,0 +1,1 @@
+# SEC-SED-Hamming-Technique-using-Xilinx-Vivado-and-Artix-7-FPGA
