@@ -50,6 +50,3 @@ This repository contains the Verilog implementation of a Single Error Correction
 
 Feel free to explore the code and use it in your projects. Contributions and suggestions are welcome to improve the design further!
 
---- 
-
-This description is professional and provides a clear understanding of the project while highlighting its purpose and applications.
