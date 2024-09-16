@@ -22,9 +22,7 @@ The error detection is acquired by Hamming Encoder technique,
 
 -->
 
-Here is a description for your GitHub post on the **SEC-SED Hamming Technique using Xilinx Vivado and Artix-7 FPGA**:
 
----
 
 # SEC-SED Hamming Code Implementation on Artix-7 FPGA
 
