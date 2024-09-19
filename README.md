@@ -24,29 +24,46 @@ The error detection is acquired by Hamming Encoder technique,
 
 
 
-# SEC-SED Hamming Code Implementation on Artix-7 FPGA
+# SEC-SED Hamming Code Implementation on Artix-7 FPGA using verilo programming
 
-This repository contains the Verilog implementation of a Single Error Correction, Double Error Detection (SEC-SED) Hamming Code. The project is designed to detect and correct single-bit errors, while also identifying double-bit errors in transmitted data. This technique is crucial in digital communication systems and memory error detection/correction for enhancing data reliability.
+### Description:
+This project implements a **Hamming Code with Single Error Correction (SEC) and Single Error Detection (SED)** using Verilog. The goal is to ensure reliable data transmission by detecting and correcting single-bit errors in a 4-bit data word, encoded into a 7-bit code word. The implementation follows the principles of Hamming(7,4) code and allows for real-time detection and correction of errors.
 
-## Key Features:
-- **Error Detection**: Detects both single-bit and double-bit errors in the transmitted data.
-- **Error Correction**: Corrects single-bit errors automatically.
-- **Double-bit Error Indication**: Alerts the system in case of a double-bit error without attempting correction.
-- **FPGA Target**: Implemented on an Artix-7 FPGA using Xilinx Vivado 2024.1.
-- **Verilog HDL**: Written entirely in Verilog HDL for synthesis and simulation.
+### Project Files:
+1. **Hamming Encoder Module**: Encodes 4-bit input data into a 7-bit Hamming code with parity bits.
+2. **Hamming Decoder Module**: Decodes the 7-bit code, detects and corrects single-bit errors, and outputs the corrected 4-bit data.
 
-## Tools and Technologies:
-- **FPGA Platform**: Artix-7 FPGA
-- **Design Suite**: Xilinx Vivado 2024.1
-- **Hardware Description Language**: Verilog
+### Hamming Code Calculation:
+Hamming codes use a combination of data bits and parity bits to form a code word. In this implementation, 4 data bits (`d3`, `d2`, `d1`, `d0`) are used, and 3 parity bits (`p1`, `p2`, `p4`) are calculated based on specific positions. 
 
-## Simulation and Testing:
-- The design has been simulated in Xilinx Vivado to ensure correct functionality of error detection and correction.
-- Testbenches are included to verify the design under various error scenarios.
+For the given 4-bit input data `d[3:0]`, the encoded 7-bit output `data_out[6:0]` consists of:
+- `p1`, `p2`, `d0`, `p4`, `d1`, `d2`, `d3`
+
+The parity bits are calculated as follows:
+- `p1` is the XOR of bits at positions 1, 3, 5, and 7.
+- `p2` is the XOR of bits at positions 2, 3, 6, and 7.
+- `p4` is the XOR of bits at positions 4, 5, 6, and 7.
+
+### Example:
+
+- **Input (4-bit data):** `1010`
+- **Encoded (7-bit Hamming code):** `1001101`
+
+Here’s how the parity bits are calculated:
+- `p1 = d0 ⊕ d1 ⊕ d3 = 1 ⊕ 0 ⊕ 0 = 1`
+- `p2 = d0 ⊕ d2 ⊕ d3 = 1 ⊕ 1 ⊕ 0 = 0`
+- `p4 = d1 ⊕ d2 ⊕ d3 = 0 ⊕ 1 ⊕ 0 = 1`
+
+So, the encoded 7-bit output becomes: `1001101`.
+
+### Error Detection and Correction:
+The decoder module computes the syndrome using the parity check logic:
+- If the syndrome is non-zero, it identifies the position of the error and corrects it.
+- If the syndrome is `000`, no errors are detected.
+
+For example, if the received code word is `1011101` (with an error in bit 3), the syndrome will be `011` (indicating an error at bit position 3). The decoder will correct the error and output the corrected data.
 
 ## Applications:
 - Communication systems for error-resilient data transmission.
 - Memory systems requiring error detection and correction to ensure data integrity.
-
-Feel free to explore the code and use it in your projects. Contributions and suggestions are welcome to improve the design further!
 
